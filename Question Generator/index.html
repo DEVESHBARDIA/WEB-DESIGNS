@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Random Question Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    form {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    input[type="number"] {
+      padding: 5px;
+    }
+
+    input[type="submit"] {
+      padding: 5px 10px;
+    }
+
+    .questions {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Random Question Generator</h1>
+
+  <form onsubmit="generateQuestions(event)">
+    <label for="numQuestions">Number of Questions:</label>
+    <input type="number" id="numQuestions" required>
+
+    <label for="moduleNumber">Module Number:</label>
+    <input type="number" id="moduleNumber" min="1" max="5" required>
+
+    <input type="submit" value="Generate Questions">
+  </form>
+
+  <div class="questions" id="questionsContainer"></div>
+
+  <script>
+    const moduleArrays = [
+      ["Why Java is platform independent?", "Explain public static void main(String args[]) in Java.", "Why Java is not 100% Object-oriented?", "What are constructors in Java?", "What is the difference between equals() and == in Java?", " What is singleton class in Java and how can we make a class singleton?", "What is the difference between Array list and vector in Java?", " When can you use the super keyword?","What are the differences between HashMap and HashTable in Java?", "What is the importance of reflection in Java?"],
+      ["What is the difference between list and tuples in Python?", " What are the key features of Python?", " What type of language is python? Programming or scripting?", "Python an interpreted language. Explain.", "What is pep 8?","What are the benefits of using Python?", "What are Python namespaces?", "What are decorators in Python?", "What are Dict and List comprehensions?", "What are the common built-in data types in Python?"],
+      ["Why is C called a mid-level programming language?", "What are the features of the C language?", "What is a token?", "What is a built-in function in C?", "What is a Preprocessor?", "In C, What is the #line used for?", "How can a string be converted to a number?", "How can a number be converted to a string? ", " What is recursion in C?","Why doesn’t C support function overloading?"],
+      ["What is a process and process table?", "What are the different states of the process?", "What is a Thread? ", "What are the differences between process and thread?", "What are the benefits of multithreaded programming? ","What is Thrashing? ", "What is virtual memory?", "Explain the main purpose of an operating system?", "What is demand paging?", "What is a kernel?"],
+      ["What Are the Different Types of Data Structures?", "What Are the Benefits of Learning Data Structures?", "What Are the Applications of Data Structures?", "What Is the Difference Between File Structure and Storage Structure?", "Linear Data Structures vs Non-Linear Data Structures: What Is the Difference?","What Is an Array?", "How Can You Store the Elements of a 2D Array in the Memory?", "What Is a Linked List?", "Explain Multidimensional Arrays.", "Are Linked Lists Considered Linear or Non-Linear Data Structures?s"]
+    ];
+
+    function generateQuestions(event) {
+      event.preventDefault();
+
+      const numQuestionsInput = document.getElementById("numQuestions");
+      const moduleNumberInput = document.getElementById("moduleNumber");
+      const questionsContainer = document.getElementById("questionsContainer");
+
+      const numQuestions = parseInt(numQuestionsInput.value);
+      const moduleNumber = parseInt(moduleNumberInput.value);
+
+      if (moduleNumber < 1 || moduleNumber > moduleArrays.length) {
+        questionsContainer.innerHTML = "Invalid module number. Please try again.";
+        return;
+      }
+
+      const moduleArray = moduleArrays[moduleNumber - 1];
+      const arraySize = moduleArray.length;
+
+      let questionsHtml = "";
+
+      for (let i = 1; i <= numQuestions; i++) {
+        const word = moduleArray[Math.floor(Math.random() * arraySize)];
+        const question = `Question ${i}:${word}`;
+
+        questionsHtml += `<p>${question}</p>`;
+      }
+
+      questionsContainer.innerHTML = questionsHtml;
+    }
+  </script>
+</body>
+</html>
